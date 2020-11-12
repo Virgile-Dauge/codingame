@@ -1,4 +1,4 @@
-2
+* Cube
 #+begin_src ipython :session pinguins :file  :exports both
   import numpy as np
   import pandas as pd
@@ -153,6 +153,16 @@
 : # Out[17]:
 : : [[3, 7, 31], [4, 6, 38], [5, 6, 46], [6, 5, 53], [7, 5, 61]]
 
+* Sans cube
+#+name: to_label
+#+begin_src ipython :session pinguins :file  :exports both
+def to_label(i, j, labels = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']):
+      return '{}{}'.format(labels[j], i+1)
+#+end_src
+
+#+RESULTS: to_label
+: # Out[1]:
+
 #+name: xlines
 #+begin_src ipython :session pinguins :file  :exports both
   def init_x_lines(hexs, n_rows=8, n_cols=8):
@@ -168,7 +178,7 @@
           j = 0
           while i < n_rows and j < n_cols:
               label = to_label(i, j)
-              hexs[label] = {'xl': len(xlines), 'xi': len(res)}
+              hexs[label] = {'xl': len(xlines), 'xi': len(res), 'v': 0}
               res.append(label)
               i, j = next_x(i, j)
           xlines.append(res)
@@ -180,7 +190,7 @@
           while i < n_rows and j < n_cols:
               label = to_label(i, j)
               res.append(label)
-              hexs[label] = {'xl': len(xlines), 'xi': len(res)}
+              hexs[label] = {'xl': len(xlines), 'xi': len(res), 'v': 0}
               i, j = next_x(i, j)
           xlines.append(res)
 
@@ -188,7 +198,7 @@
 #+end_src
 
 #+RESULTS: xlines
-: # Out[77]:
+: # Out[2]:
 
 #+name: ylines
 #+begin_src ipython :session pinguins :file  :exports both
@@ -224,7 +234,7 @@
 #+end_src
 
 #+RESULTS: ylines
-: # Out[80]:
+: # Out[3]:
 
 #+name: zlines
 #+begin_src ipython :session pinguins :file  :exports both
@@ -249,9 +259,10 @@
 #+end_src
 
 #+RESULTS: zlines
-: # Out[75]:
+: # Out[4]:
 
 #+begin_src ipython :session pinguins :file  :exports both :noweb yes :tangle tangle.py
+  <<to_label>>
   <<xlines>>
   <<ylines>>
   <<zlines>>
@@ -268,72 +279,72 @@
 
 #+RESULTS:
 #+begin_example
-# Out[82]:
+# Out[5]:
 ,#+BEGIN_EXAMPLE
-  ({'A8': {'xl': 0, 'xi': 0, 'yl': 3, 'yi': 8, 'zl': 7, 'zi': 1},
-  'A6': {'xl': 1, 'xi': 0, 'yl': 2, 'yi': 6, 'zl': 5, 'zi': 1},
-  'A7': {'xl': 1, 'xi': 1, 'yl': 3, 'yi': 7, 'zl': 6, 'zi': 1},
-  'B8': {'xl': 1, 'xi': 2, 'yl': 4, 'yi': 8, 'zl': 7, 'zi': 2},
-  'A4': {'xl': 2, 'xi': 0, 'yl': 1, 'yi': 4, 'zl': 3, 'zi': 1},
-  'A5': {'xl': 2, 'xi': 1, 'yl': 2, 'yi': 5, 'zl': 4, 'zi': 1},
-  'B6': {'xl': 2, 'xi': 2, 'yl': 3, 'yi': 6, 'zl': 5, 'zi': 2},
-  'B7': {'xl': 2, 'xi': 3, 'yl': 4, 'yi': 7, 'zl': 6, 'zi': 2},
-  'C8': {'xl': 2, 'xi': 4, 'yl': 5, 'yi': 8, 'zl': 7, 'zi': 3},
-  'A2': {'xl': 3, 'xi': 0, 'yl': 0, 'yi': 2, 'zl': 1, 'zi': 1},
-  'A3': {'xl': 3, 'xi': 1, 'yl': 1, 'yi': 3, 'zl': 2, 'zi': 1},
-  'B4': {'xl': 3, 'xi': 2, 'yl': 2, 'yi': 4, 'zl': 3, 'zi': 2},
-  'B5': {'xl': 3, 'xi': 3, 'yl': 3, 'yi': 5, 'zl': 4, 'zi': 2},
-  'C6': {'xl': 3, 'xi': 4, 'yl': 4, 'yi': 6, 'zl': 5, 'zi': 3},
-  'C7': {'xl': 3, 'xi': 5, 'yl': 5, 'yi': 7, 'zl': 6, 'zi': 3},
-  'D8': {'xl': 3, 'xi': 6, 'yl': 6, 'yi': 8, 'zl': 7, 'zi': 4},
-  'A1': {'xl': 4, 'xi': 1, 'yl': 0, 'yi': 1, 'zl': 0, 'zi': 1},
-  'B2': {'xl': 4, 'xi': 2, 'yl': 1, 'yi': 2, 'zl': 1, 'zi': 2},
-  'B3': {'xl': 4, 'xi': 3, 'yl': 2, 'yi': 3, 'zl': 2, 'zi': 2},
-  'C4': {'xl': 4, 'xi': 4, 'yl': 3, 'yi': 4, 'zl': 3, 'zi': 3},
-  'C5': {'xl': 4, 'xi': 5, 'yl': 4, 'yi': 5, 'zl': 4, 'zi': 3},
-  'D6': {'xl': 4, 'xi': 6, 'yl': 5, 'yi': 6, 'zl': 5, 'zi': 4},
-  'D7': {'xl': 4, 'xi': 7, 'yl': 6, 'yi': 7, 'zl': 6, 'zi': 4},
-  'E8': {'xl': 4, 'xi': 8, 'yl': 7, 'yi': 8, 'zl': 7, 'zi': 5},
-  'B1': {'xl': 5, 'xi': 1, 'yl': 1, 'yi': 1, 'zl': 0, 'zi': 2},
-  'C2': {'xl': 5, 'xi': 2, 'yl': 2, 'yi': 2, 'zl': 1, 'zi': 3},
-  'C3': {'xl': 5, 'xi': 3, 'yl': 3, 'yi': 3, 'zl': 2, 'zi': 3},
-  'D4': {'xl': 5, 'xi': 4, 'yl': 4, 'yi': 4, 'zl': 3, 'zi': 4},
-  'D5': {'xl': 5, 'xi': 5, 'yl': 5, 'yi': 5, 'zl': 4, 'zi': 4},
-  'E6': {'xl': 5, 'xi': 6, 'yl': 6, 'yi': 6, 'zl': 5, 'zi': 5},
-  'E7': {'xl': 5, 'xi': 7, 'yl': 7, 'yi': 7, 'zl': 6, 'zi': 5},
-  'F8': {'xl': 5, 'xi': 8, 'yl': 8, 'yi': 5, 'zl': 7, 'zi': 6},
-  'C1': {'xl': 6, 'xi': 1, 'yl': 2, 'yi': 1, 'zl': 0, 'zi': 3},
-  'D2': {'xl': 6, 'xi': 2, 'yl': 3, 'yi': 2, 'zl': 1, 'zi': 4},
-  'D3': {'xl': 6, 'xi': 3, 'yl': 4, 'yi': 3, 'zl': 2, 'zi': 4},
-  'E4': {'xl': 6, 'xi': 4, 'yl': 5, 'yi': 4, 'zl': 3, 'zi': 5},
-  'E5': {'xl': 6, 'xi': 5, 'yl': 6, 'yi': 5, 'zl': 4, 'zi': 5},
-  'F6': {'xl': 6, 'xi': 6, 'yl': 7, 'yi': 6, 'zl': 5, 'zi': 6},
-  'F7': {'xl': 6, 'xi': 7, 'yl': 8, 'yi': 4, 'zl': 6, 'zi': 6},
-  'G8': {'xl': 6, 'xi': 8, 'yl': 9, 'yi': 3, 'zl': 7, 'zi': 7},
-  'D1': {'xl': 7, 'xi': 1, 'yl': 3, 'yi': 1, 'zl': 0, 'zi': 4},
-  'E2': {'xl': 7, 'xi': 2, 'yl': 4, 'yi': 2, 'zl': 1, 'zi': 5},
-  'E3': {'xl': 7, 'xi': 3, 'yl': 5, 'yi': 3, 'zl': 2, 'zi': 5},
-  'F4': {'xl': 7, 'xi': 4, 'yl': 6, 'yi': 4, 'zl': 3, 'zi': 6},
-  'F5': {'xl': 7, 'xi': 5, 'yl': 7, 'yi': 5, 'zl': 4, 'zi': 6},
-  'G6': {'xl': 7, 'xi': 6, 'yl': 8, 'yi': 3, 'zl': 5, 'zi': 7},
-  'G7': {'xl': 7, 'xi': 7, 'yl': 9, 'yi': 2, 'zl': 6, 'zi': 7},
-  'H8': {'xl': 7, 'xi': 8, 'yl': 10, 'yi': 1, 'zl': 7, 'zi': 8},
-  'E1': {'xl': 8, 'xi': 1, 'yl': 4, 'yi': 1, 'zl': 0, 'zi': 5},
-  'F2': {'xl': 8, 'xi': 2, 'yl': 5, 'yi': 2, 'zl': 1, 'zi': 6},
-  'F3': {'xl': 8, 'xi': 3, 'yl': 6, 'yi': 3, 'zl': 2, 'zi': 6},
-  'G4': {'xl': 8, 'xi': 4, 'yl': 7, 'yi': 4, 'zl': 3, 'zi': 7},
-  'G5': {'xl': 8, 'xi': 5, 'yl': 8, 'yi': 2, 'zl': 4, 'zi': 7},
-  'H6': {'xl': 8, 'xi': 6, 'yl': 9, 'yi': 1, 'zl': 5, 'zi': 8},
-  'H7': {'xl': 8, 'xi': 7, 'yl': 10, 'yi': 0, 'zl': 6, 'zi': 8},
-  'F1': {'xl': 9, 'xi': 1, 'yl': 5, 'yi': 1, 'zl': 0, 'zi': 6},
-  'G2': {'xl': 9, 'xi': 2, 'yl': 6, 'yi': 2, 'zl': 1, 'zi': 7},
-  'G3': {'xl': 9, 'xi': 3, 'yl': 7, 'yi': 3, 'zl': 2, 'zi': 7},
-  'H4': {'xl': 9, 'xi': 4, 'yl': 8, 'yi': 1, 'zl': 3, 'zi': 8},
-  'H5': {'xl': 9, 'xi': 5, 'yl': 9, 'yi': 0, 'zl': 4, 'zi': 8},
-  'G1': {'xl': 10, 'xi': 1, 'yl': 6, 'yi': 1, 'zl': 0, 'zi': 7},
-  'H2': {'xl': 10, 'xi': 2, 'yl': 7, 'yi': 2, 'zl': 1, 'zi': 8},
-  'H3': {'xl': 10, 'xi': 3, 'yl': 8, 'yi': 0, 'zl': 2, 'zi': 8},
-  'H1': {'xl': 11, 'xi': 1, 'yl': 7, 'yi': 1, 'zl': 0, 'zi': 8}},
+  ({'A8': {'xl': 0, 'xi': 0, 'v': 0, 'yl': 3, 'yi': 8, 'zl': 7, 'zi': 1},
+  'A6': {'xl': 1, 'xi': 0, 'v': 0, 'yl': 2, 'yi': 6, 'zl': 5, 'zi': 1},
+  'A7': {'xl': 1, 'xi': 1, 'v': 0, 'yl': 3, 'yi': 7, 'zl': 6, 'zi': 1},
+  'B8': {'xl': 1, 'xi': 2, 'v': 0, 'yl': 4, 'yi': 8, 'zl': 7, 'zi': 2},
+  'A4': {'xl': 2, 'xi': 0, 'v': 0, 'yl': 1, 'yi': 4, 'zl': 3, 'zi': 1},
+  'A5': {'xl': 2, 'xi': 1, 'v': 0, 'yl': 2, 'yi': 5, 'zl': 4, 'zi': 1},
+  'B6': {'xl': 2, 'xi': 2, 'v': 0, 'yl': 3, 'yi': 6, 'zl': 5, 'zi': 2},
+  'B7': {'xl': 2, 'xi': 3, 'v': 0, 'yl': 4, 'yi': 7, 'zl': 6, 'zi': 2},
+  'C8': {'xl': 2, 'xi': 4, 'v': 0, 'yl': 5, 'yi': 8, 'zl': 7, 'zi': 3},
+  'A2': {'xl': 3, 'xi': 0, 'v': 0, 'yl': 0, 'yi': 2, 'zl': 1, 'zi': 1},
+  'A3': {'xl': 3, 'xi': 1, 'v': 0, 'yl': 1, 'yi': 3, 'zl': 2, 'zi': 1},
+  'B4': {'xl': 3, 'xi': 2, 'v': 0, 'yl': 2, 'yi': 4, 'zl': 3, 'zi': 2},
+  'B5': {'xl': 3, 'xi': 3, 'v': 0, 'yl': 3, 'yi': 5, 'zl': 4, 'zi': 2},
+  'C6': {'xl': 3, 'xi': 4, 'v': 0, 'yl': 4, 'yi': 6, 'zl': 5, 'zi': 3},
+  'C7': {'xl': 3, 'xi': 5, 'v': 0, 'yl': 5, 'yi': 7, 'zl': 6, 'zi': 3},
+  'D8': {'xl': 3, 'xi': 6, 'v': 0, 'yl': 6, 'yi': 8, 'zl': 7, 'zi': 4},
+  'A1': {'xl': 4, 'xi': 1, 'v': 0, 'yl': 0, 'yi': 1, 'zl': 0, 'zi': 1},
+  'B2': {'xl': 4, 'xi': 2, 'v': 0, 'yl': 1, 'yi': 2, 'zl': 1, 'zi': 2},
+  'B3': {'xl': 4, 'xi': 3, 'v': 0, 'yl': 2, 'yi': 3, 'zl': 2, 'zi': 2},
+  'C4': {'xl': 4, 'xi': 4, 'v': 0, 'yl': 3, 'yi': 4, 'zl': 3, 'zi': 3},
+  'C5': {'xl': 4, 'xi': 5, 'v': 0, 'yl': 4, 'yi': 5, 'zl': 4, 'zi': 3},
+  'D6': {'xl': 4, 'xi': 6, 'v': 0, 'yl': 5, 'yi': 6, 'zl': 5, 'zi': 4},
+  'D7': {'xl': 4, 'xi': 7, 'v': 0, 'yl': 6, 'yi': 7, 'zl': 6, 'zi': 4},
+  'E8': {'xl': 4, 'xi': 8, 'v': 0, 'yl': 7, 'yi': 8, 'zl': 7, 'zi': 5},
+  'B1': {'xl': 5, 'xi': 1, 'v': 0, 'yl': 1, 'yi': 1, 'zl': 0, 'zi': 2},
+  'C2': {'xl': 5, 'xi': 2, 'v': 0, 'yl': 2, 'yi': 2, 'zl': 1, 'zi': 3},
+  'C3': {'xl': 5, 'xi': 3, 'v': 0, 'yl': 3, 'yi': 3, 'zl': 2, 'zi': 3},
+  'D4': {'xl': 5, 'xi': 4, 'v': 0, 'yl': 4, 'yi': 4, 'zl': 3, 'zi': 4},
+  'D5': {'xl': 5, 'xi': 5, 'v': 0, 'yl': 5, 'yi': 5, 'zl': 4, 'zi': 4},
+  'E6': {'xl': 5, 'xi': 6, 'v': 0, 'yl': 6, 'yi': 6, 'zl': 5, 'zi': 5},
+  'E7': {'xl': 5, 'xi': 7, 'v': 0, 'yl': 7, 'yi': 7, 'zl': 6, 'zi': 5},
+  'F8': {'xl': 5, 'xi': 8, 'v': 0, 'yl': 8, 'yi': 5, 'zl': 7, 'zi': 6},
+  'C1': {'xl': 6, 'xi': 1, 'v': 0, 'yl': 2, 'yi': 1, 'zl': 0, 'zi': 3},
+  'D2': {'xl': 6, 'xi': 2, 'v': 0, 'yl': 3, 'yi': 2, 'zl': 1, 'zi': 4},
+  'D3': {'xl': 6, 'xi': 3, 'v': 0, 'yl': 4, 'yi': 3, 'zl': 2, 'zi': 4},
+  'E4': {'xl': 6, 'xi': 4, 'v': 0, 'yl': 5, 'yi': 4, 'zl': 3, 'zi': 5},
+  'E5': {'xl': 6, 'xi': 5, 'v': 0, 'yl': 6, 'yi': 5, 'zl': 4, 'zi': 5},
+  'F6': {'xl': 6, 'xi': 6, 'v': 0, 'yl': 7, 'yi': 6, 'zl': 5, 'zi': 6},
+  'F7': {'xl': 6, 'xi': 7, 'v': 0, 'yl': 8, 'yi': 4, 'zl': 6, 'zi': 6},
+  'G8': {'xl': 6, 'xi': 8, 'v': 0, 'yl': 9, 'yi': 3, 'zl': 7, 'zi': 7},
+  'D1': {'xl': 7, 'xi': 1, 'v': 0, 'yl': 3, 'yi': 1, 'zl': 0, 'zi': 4},
+  'E2': {'xl': 7, 'xi': 2, 'v': 0, 'yl': 4, 'yi': 2, 'zl': 1, 'zi': 5},
+  'E3': {'xl': 7, 'xi': 3, 'v': 0, 'yl': 5, 'yi': 3, 'zl': 2, 'zi': 5},
+  'F4': {'xl': 7, 'xi': 4, 'v': 0, 'yl': 6, 'yi': 4, 'zl': 3, 'zi': 6},
+  'F5': {'xl': 7, 'xi': 5, 'v': 0, 'yl': 7, 'yi': 5, 'zl': 4, 'zi': 6},
+  'G6': {'xl': 7, 'xi': 6, 'v': 0, 'yl': 8, 'yi': 3, 'zl': 5, 'zi': 7},
+  'G7': {'xl': 7, 'xi': 7, 'v': 0, 'yl': 9, 'yi': 2, 'zl': 6, 'zi': 7},
+  'H8': {'xl': 7, 'xi': 8, 'v': 0, 'yl': 10, 'yi': 1, 'zl': 7, 'zi': 8},
+  'E1': {'xl': 8, 'xi': 1, 'v': 0, 'yl': 4, 'yi': 1, 'zl': 0, 'zi': 5},
+  'F2': {'xl': 8, 'xi': 2, 'v': 0, 'yl': 5, 'yi': 2, 'zl': 1, 'zi': 6},
+  'F3': {'xl': 8, 'xi': 3, 'v': 0, 'yl': 6, 'yi': 3, 'zl': 2, 'zi': 6},
+  'G4': {'xl': 8, 'xi': 4, 'v': 0, 'yl': 7, 'yi': 4, 'zl': 3, 'zi': 7},
+  'G5': {'xl': 8, 'xi': 5, 'v': 0, 'yl': 8, 'yi': 2, 'zl': 4, 'zi': 7},
+  'H6': {'xl': 8, 'xi': 6, 'v': 0, 'yl': 9, 'yi': 1, 'zl': 5, 'zi': 8},
+  'H7': {'xl': 8, 'xi': 7, 'v': 0, 'yl': 10, 'yi': 0, 'zl': 6, 'zi': 8},
+  'F1': {'xl': 9, 'xi': 1, 'v': 0, 'yl': 5, 'yi': 1, 'zl': 0, 'zi': 6},
+  'G2': {'xl': 9, 'xi': 2, 'v': 0, 'yl': 6, 'yi': 2, 'zl': 1, 'zi': 7},
+  'G3': {'xl': 9, 'xi': 3, 'v': 0, 'yl': 7, 'yi': 3, 'zl': 2, 'zi': 7},
+  'H4': {'xl': 9, 'xi': 4, 'v': 0, 'yl': 8, 'yi': 1, 'zl': 3, 'zi': 8},
+  'H5': {'xl': 9, 'xi': 5, 'v': 0, 'yl': 9, 'yi': 0, 'zl': 4, 'zi': 8},
+  'G1': {'xl': 10, 'xi': 1, 'v': 0, 'yl': 6, 'yi': 1, 'zl': 0, 'zi': 7},
+  'H2': {'xl': 10, 'xi': 2, 'v': 0, 'yl': 7, 'yi': 2, 'zl': 1, 'zi': 8},
+  'H3': {'xl': 10, 'xi': 3, 'v': 0, 'yl': 8, 'yi': 0, 'zl': 2, 'zi': 8},
+  'H1': {'xl': 11, 'xi': 1, 'v': 0, 'yl': 7, 'yi': 1, 'zl': 0, 'zi': 8}},
   [['A8'],
   ['A6', 'A7', 'B8'],
   ['A4', 'A5', 'B6', 'B7', 'C8'],
@@ -355,3 +366,39 @@
 
 #+RESULTS:
 : # Out[83]:
+#+name: eval_hex
+#+begin_src ipython :session pinguins :file  :exports both
+  def eval_line(self, line, i, line_factor=1/3):
+      value = 0
+      # On cherche à gauche
+      max = 0
+      k = i - 1
+      while k >= 0:
+          v = self.hexs[line[k]]['v']
+          if v > max:
+              max = v
+          k -= 1
+      value += line_factor/2 * max
+
+      # On cherche à droite
+      max = 0
+      k = i + 1
+      while k < len(line):
+          v = self.hexs[line[k]]['v']
+          if v > max:
+              max = v
+          k += 1
+      value += line_factor/2 * max
+      return value
+
+  def eval_hex(self, label, v_factor=1, d2_factor=0.75):
+      to_eval = self.hexs[label]
+      value = v_factor * to_eval['v']
+
+      value += d2_factor * self.eval_line(self.xlines[to_eval['xl']], to_eval['xi'])
+      value += d2_factor * self.eval_line(self.ylines[to_eval['yl']], to_eval['yi'])
+      value += d2_factor * self.eval_line(self.zlines[to_eval['zl']], to_eval['zi'])
+      return value
+
+
+#+end_src

@@ -1,3 +1,5 @@
+def to_label(i, j, labels = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']):
+      return '{}{}'.format(labels[j], i+1)
 def init_x_lines(hexs, n_rows=8, n_cols=8):
     def next_x(i, j, n_rows=8, n_cols=8):
         return i+1, j + 1 if i % 2 == 0 else j
@@ -11,7 +13,7 @@ def init_x_lines(hexs, n_rows=8, n_cols=8):
         j = 0
         while i < n_rows and j < n_cols:
             label = to_label(i, j)
-            hexs[label] = {'xl': len(xlines), 'xi': len(res)}
+            hexs[label] = {'xl': len(xlines), 'xi': len(res), 'v': 0}
             res.append(label)
             i, j = next_x(i, j)
         xlines.append(res)
@@ -23,7 +25,7 @@ def init_x_lines(hexs, n_rows=8, n_cols=8):
         while i < n_rows and j < n_cols:
             label = to_label(i, j)
             res.append(label)
-            hexs[label] = {'xl': len(xlines), 'xi': len(res)}
+            hexs[label] = {'xl': len(xlines), 'xi': len(res), 'v': 0}
             i, j = next_x(i, j)
         xlines.append(res)
 
